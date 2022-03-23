@@ -1,0 +1,44 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: snair <marvin@42.fr>                       +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/03/07 15:59:02 by snair             #+#    #+#              #
+#    Updated: 2022/03/09 09:42:24 by snair            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+SRCS = *.c
+
+NAME = minitalk
+
+CFLAGS = -Wall -Wextra -Werror
+
+OBJS = $(SRCS:.c=.o)
+
+all: server client 
+
+libft: 
+		make re -C libft
+
+server: libft
+		gcc -c $(CFLAGS) $(SRCS)
+		gcc -o server server.o libft/libft.a
+
+client: libft
+		gcc -c $(CFLAGS) $(SRCS)
+		gcc -o client client.o libft/libft.a
+
+$(NAME): all
+
+clean: 
+		rm -f $(OBJS) libft/*.o libft/*.a
+
+fclean: clean
+		rm -f server client 
+
+re : fclean all
+
+.PHONY: all libft clean fclean re
